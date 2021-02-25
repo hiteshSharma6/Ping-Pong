@@ -1,0 +1,108 @@
+.fade {
+    transition-duration: 1s;
+    transition-property: opacity;
+    transition-timing-function: ease-in;
+    opacity: 0;
+}
+
+h1 {
+    text-align: center;
+    color: #ffffff;
+    text-shadow: 0 0 5px #000000, 0 0 10px #ffffff, 0 0 10px #000000;
+}
+
+#loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+#circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 10px solid transparent;
+    border-top: 10px solid rgba(145, 255, 251, 0.8);
+    animation-name: swing;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+}
+
+@keyframes swing {
+    0% {
+        transform: rotate(60deg);
+    }
+    100% {
+        transform: rotate(420deg);
+    }
+}
+
+#loader h2 {
+    color: #ffffff;
+    letter-spacing: 1.5px;
+    word-spacing: 2px;
+    text-shadow: 0 0 2px #000000, 0 0 6px #ffffff, 0 0 10px #000000;
+    font-family: 'Audiowide', cursive;
+}
+
+#match {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.p {
+    font-family: 'Rock Salt', cursive;
+    margin: 0 20px;
+    display: flex;
+    justify-content: center;
+}
+
+#p1, #p2 {
+    padding: 10px 40px;
+    text-align: center;
+    /* width: 300px; */
+    /* height: 50px; */
+    /* box-shadow: inset 0 0 30px rgba(27, 214, 204, 0.5); */
+}
+
+#right-arr, #left-arr {
+    border-color: transparent;
+    border-style: solid;
+    /* border-width: 35px; */
+}
+/* 
+#right-arr {
+    border-left-color: rgba(27, 214, 204, 0.2);
+}
+
+#left-arr {
+    border-right-color: rgba(27, 214, 204, 0.2);
+} */
+
+#match h2 {
+    font-family: 'Orbitron', sans-serif;
+    text-shadow: 0px 0px 10px rgba(27, 214, 204, 1), 0px 0px 30px #000000;
+}
+
+canvas {
+    margin: auto;
+    display: block;
+}
+
+canvas:focus {
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 1),
+        2px 2px 5px rgba(255, 255, 255, 1),
+        4px 4px 5px rgba(0, 0, 0, 1);
+}
