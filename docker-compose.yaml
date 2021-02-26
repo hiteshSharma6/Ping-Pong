@@ -1,0 +1,22 @@
+version: "2.4"
+
+services:
+
+  ping-pong:
+    # container_name: "ping-pong" # should not use container_name for scaling purposes, since they need to be unique
+    scale: 2
+    build:
+      context: .
+      dockerfile: Dockerfile
+    tmpfs: /home/hitesh # temp directory in container space only
+    restart: "no"
+    volumes:
+      - /home/hitesh/Documents:/home/devs # The changes in both the host and container are visible. The read-write is available to root user only
+      - type: bind # No difference found as for operations and working of volume mounting
+        source: /home/hitesh
+        target: /home/bindVol
+    ports:
+      - "8000" # Provides a random port on the host machine
+    extra_hosts:
+      - "mygame:0.0.0.0" # Don't know how it can be utilized
+    command: [sh, -c, "$$PWD && node index.js"] #overrides the CMD in Dockerfile. So this one can be ignored here (also, this is not the correct way)
