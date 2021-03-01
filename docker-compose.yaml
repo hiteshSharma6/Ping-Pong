@@ -19,4 +19,4 @@ services:
       - "8000" # Provides a random port on the host machine
     extra_hosts:
       - "mygame:0.0.0.0" # Don't know how it can be utilized
-    command: [sh, -c, "$$PWD && node index.js"] #overrides the CMD in Dockerfile. So this one can be ignored here (also, this is not the correct way)
+    # command: [sh, -c, "$$PWD && node index.js"] #overrides the CMD in Dockerfile. So this one can be ignored here (also, this does not work)
