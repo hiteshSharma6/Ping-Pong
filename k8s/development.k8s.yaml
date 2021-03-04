@@ -1,0 +1,56 @@
+# apiVersion:
+
+# ---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ping-pong-deployment
+  labels:
+    app: ping-pong
+  # annotations: # They are important from the user's perspective, but I don't know what to define here
+spec:
+  replicas: 2
+  selector: # Existing ReplicaSets whose pods are selected by this will be the ones affected by this deployment. It must match the pod template's labels
+    matchLabels: # 'AND' values that matches with the container names 
+      app: ping-pong
+  template: # POD's data. I'm wondering if I can refer to a POD file instead, and that should be the case for multiple containers in a pod
+    metadata:
+      # name: ping-pong-app
+      labels:
+        app: ping-pong
+    spec:
+      restartPolicy: Always # "Always", "OnFailure", "Never". This is default
+      containers:
+      - name: ping-pong-app
+        image: ping-pong:1.0.0
+        ports:
+        - containerPort: 8000
+        command: ["/bin/sh"] # This is entrypoint array. Docker image's ENTRYPOINT is used if this is not provided
+        args: ["-c", "node index.js"] # Arguments to the entrypoint. The docker image's CMD is used if this is not provided
+        # env: # These are environment variables that are specific to container. Can also refer to ConfigMap or Secret here
+        # - name:
+        #   value:
+        #   ....
+      # volumes:
+      #   - name: #Persistent Volumes / Persistent Volume Claims
+  revisionHistoryLimit: 2 # Number of old ReplicaSets to retain to allow rollback. Defaults to 10
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ping-pong-service
+  labels:
+    app: ping-pong
+spec:
+  selector: # Route service traffic to pods with label keys and values matching this selector
+    app: ping-pong # container meta label
+  type: LoadBalancer # type determines how the Service is exposed. Valid options are ExternalName, ClusterIP(default), NodePort, and LoadBalancer
+  ports:
+  - name: http # DNS_LABEL format
+    protocol: TCP # Default is TCP
+    targetPort: 8000 # target pod's container ports.
+    port: 8000
+    nodePort: 30000 # the port on each node on which this service is exposed when type is NodePort or LoadBalancer.
